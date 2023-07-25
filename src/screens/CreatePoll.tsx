@@ -5,6 +5,7 @@ import { format } from "date-fns"
 import { pollService } from "../axios/pollAxios"
 import { Content, Footer, Header } from "antd/es/layout/layout"
 import About from "../components/about"
+import { useNavigate } from "react-router-dom"
 
 interface Option {
   option: string;
@@ -17,9 +18,10 @@ interface Poll {
   options: Option[];
 }
 
-const VotacaoForm: React.FC = () => {
+const PollForm: React.FC = () => {
     const [form] = Form.useForm<Poll>()
     const [options, setOptions] = useState<Option[]>([])
+    const navigate = useNavigate()
 
     const handleOpcaoChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
         const newOptions = [...options]
@@ -39,10 +41,10 @@ const VotacaoForm: React.FC = () => {
 
         pollService.post("http://localhost:8080/api/v1/poll", formattedValues)
             .then((response) => {
-                console.log("Resposta da API:", response.data)
+                navigate("/pollCreated/" + response.data.id)
             })
             .catch((error) => {
-                console.error("Erro na chamada da API:", error)
+                console.error("error while create poll:", error)
             })
     }
 
@@ -107,4 +109,4 @@ const VotacaoForm: React.FC = () => {
     )
 }
 
-export default VotacaoForm
+export default PollForm

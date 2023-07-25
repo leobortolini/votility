@@ -2,7 +2,8 @@ import { createBrowserRouter } from "react-router-dom"
 import PollOptions from "../screens/PollOptions"
 import VoteSent from "../screens/VoteSent"
 import ResultComponent from "../screens/Result"
-import VotacaoForm from "../screens/CreatePoll"
+import PollForm from "../screens/CreatePoll"
+import PollCreated from "../screens/PollCreated"
 
 export const router = createBrowserRouter([
     {
@@ -19,7 +20,11 @@ export const router = createBrowserRouter([
     },
     {
         path: "/poll",
-        element: <VotacaoForm />
+        element: <PollForm />
+    },
+    {
+        path: "/pollCreated/:id",
+        element: <PollCreated />
     },
     {
         path: "/result/:id",
