@@ -4,16 +4,18 @@ import { pollService } from "../axios/pollAxios"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts"
 import { useParams } from "react-router-dom"
 import { Result } from "../types/Result"
-import { Layout, Typography } from "antd"
+import { Layout, Spin, Typography } from "antd"
 import { Content, Footer, Header } from "antd/es/layout/layout"
 import About from "../components/about"
 import { Poll } from "../types/Poll"
 import Countdown from "../components/countdown"
+import React from "react"
 
 const VoteChart = () => {
     const [resultData, setResultData] = useState<Result | null>(null)
     const [pollData, setPollData] = useState<Poll | null>(null)
     const [combinedResult, setCombinedResult] = useState<CombinedVoteData[] | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
     const { id } = useParams()
 
     useEffect(() => {
@@ -26,8 +28,7 @@ const VoteChart = () => {
         optionId: number;
         title: string;
         votes: number;
-      }
-
+    }
 
     useEffect(() => {
         if (resultData && pollData) {
@@ -45,17 +46,17 @@ const VoteChart = () => {
             }
 
             setCombinedResult(combinedVoteData)
+            setIsLoading(false) // Defina isLoading como false quando os dados estiverem prontos.
         }
     }, [resultData, pollData])
 
-
-    async function getResult (pollId: string) {
+    async function getResult(pollId: string) {
         try {
             const response = await voteService.get(`/${pollId}`)
             if (response.status === 200)
                 setResultData(response.data)
         } catch (error) {
-            console.error("Error while get result", error)
+            console.error("Error while getting result", error)
         }
     }
 
@@ -66,7 +67,7 @@ const VoteChart = () => {
             if (response.status === 200)
                 setPollData(response.data)
         } catch (error) {
-            console.error("Error while get poll", error)
+            console.error("Error while getting poll", error)
         }
     }
 
@@ -80,24 +81,30 @@ const VoteChart = () => {
 
     return (
         <Layout style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-            <Header style={{height: "120px", backgroundColor: "#414140", display: "flex", justifyContent: "center"}}>
-                <h1 style={{alignSelf: "center", fontSize: "3em"}}>{pollData?.title}</h1>
+            <Header style={{ height: "120px", backgroundColor: "#414140", display: "flex", justifyContent: "center" }}>
+                <h1 style={{ alignSelf: "center", fontSize: "3em" }}>{pollData?.title}</h1>
             </Header>
-            <Content style={{padding: 24}}>
+            <Content style={{ padding: 24 }}>
                 <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
-                    <BarChart style={{alignSelf: "center"}} width={800} height={600} data={combinedResult??[]}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="title" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="votes" fill="#8884d8" />
-                    </BarChart>
-                    <Typography.Paragraph style={{ fontSize: "2em", alignSelf: "center"}}>{pollData?.description}</Typography.Paragraph>
-                    <Typography.Text style={{ alignSelf: "center" }}><Countdown text="This poll ends in" finishedText="Poll completed" targetDate={pollData?.expire_date} /></Typography.Text>
+                    {isLoading ? (
+                        <Spin style={{ alignSelf: "center" }} />
+                    ) : (
+                        <React.Fragment>
+                            <BarChart style={{ alignSelf: "center" }} width={800} height={600} data={combinedResult ?? []}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="title" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="votes" fill="#8884d8" />
+                            </BarChart>
+                            <Typography.Paragraph style={{ fontSize: "2em", alignSelf: "center" }}>{pollData?.description}</Typography.Paragraph>
+                            <Typography.Text style={{ alignSelf: "center" }}><Countdown text="This poll ends in" finishedText="Poll completed" targetDate={pollData?.expire_date} /></Typography.Text>
+                        </React.Fragment>
+                    )}
                 </div>
             </Content>
-            <Footer style={{padding: 0}}>
+            <Footer style={{ padding: 0 }}>
                 <About />
             </Footer>
         </Layout>
