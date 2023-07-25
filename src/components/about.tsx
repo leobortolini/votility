@@ -2,9 +2,9 @@ import React from "react"
 import { Carousel } from "antd"
 
 const contentStyle: React.CSSProperties = {
-    height: "160px",
+    height: "80px",
     color: "#fff",
-    lineHeight: "160px",
+    lineHeight: "80px",
     textAlign: "center",
     background: "#414140",
 }

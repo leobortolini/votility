@@ -38,7 +38,7 @@ function PollOptions() {
                 if (response.status === 200) {
                     console.log("vote sent")
 
-                    navigate("/voteSent")
+                    navigate("/voteSent/" + pollData?.id)
                 }
             }
         } catch (error) {

@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
         element: <PollOptions />
     },
     {
-        path: "/voteSent",
+        path: "/voteSent/:id",
         element: <VoteSent />
     },
     {

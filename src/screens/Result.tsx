@@ -4,10 +4,11 @@ import { pollService } from "../axios/pollAxios"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts"
 import { useParams } from "react-router-dom"
 import { Result } from "../types/Result"
-import { Layout } from "antd"
+import { Layout, Typography } from "antd"
 import { Content, Footer, Header } from "antd/es/layout/layout"
 import About from "../components/about"
 import { Poll } from "../types/Poll"
+import Countdown from "../components/countdown"
 
 const VoteChart = () => {
     const [resultData, setResultData] = useState<Result | null>(null)
@@ -24,7 +25,7 @@ const VoteChart = () => {
     interface CombinedVoteData {
         optionId: number;
         title: string;
-        count: number;
+        votes: number;
       }
 
 
@@ -39,8 +40,8 @@ const VoteChart = () => {
 
             for (const voteOption of pollData.options ?? []) {
                 const { id, title } = voteOption
-                const count = voteCountsMap[id] || 0
-                combinedVoteData.push({ optionId: id, title, count })
+                const votes = voteCountsMap[id] || 0
+                combinedVoteData.push({ optionId: id, title, votes })
             }
 
             setCombinedResult(combinedVoteData)
@@ -79,19 +80,21 @@ const VoteChart = () => {
 
     return (
         <Layout style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-            <Header>
-
+            <Header style={{height: "120px", backgroundColor: "#414140", display: "flex", justifyContent: "center"}}>
+                <h1 style={{alignSelf: "center", fontSize: "3em"}}>{pollData?.title}</h1>
             </Header>
-            <Content>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                    <BarChart width={800} height={800} data={combinedResult??[]}>
+            <Content style={{padding: 24}}>
+                <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
+                    <BarChart style={{alignSelf: "center"}} width={800} height={600} data={combinedResult??[]}>
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="title" />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey="count" fill="#8884d8" />
+                        <Bar dataKey="votes" fill="#8884d8" />
                     </BarChart>
+                    <Typography.Paragraph style={{ fontSize: "2em", alignSelf: "center"}}>{pollData?.description}</Typography.Paragraph>
+                    <Typography.Text style={{ alignSelf: "center" }}><Countdown text="This poll ends in" finishedText="Poll completed" targetDate={pollData?.expire_date} /></Typography.Text>
                 </div>
             </Content>
             <Footer style={{padding: 0}}>
