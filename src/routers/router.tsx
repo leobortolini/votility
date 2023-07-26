@@ -4,11 +4,12 @@ import VoteSent from "../screens/VoteSent"
 import ResultComponent from "../screens/Result"
 import PollForm from "../screens/CreatePoll"
 import PollCreated from "../screens/PollCreated"
+import HomePage from "../screens/Home"
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <div>Home</div>
+        element: <HomePage />
     },
     {
         path: "/poll/:id",

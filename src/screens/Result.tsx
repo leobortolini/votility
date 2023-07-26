@@ -52,7 +52,7 @@ const VoteChart = () => {
 
     async function getResult(pollId: string) {
         try {
-            const response = await voteService.get(`/${pollId}`)
+            const response = await voteService.get(`/${pollId}/poll`)
             if (response.status === 200)
                 setResultData(response.data)
         } catch (error) {
