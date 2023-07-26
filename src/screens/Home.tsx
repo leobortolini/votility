@@ -17,7 +17,6 @@ function HomePage() {
             .get<Vote>(`http://localhost:8081/api/v1/vote/${voteId}/validate`)
             .then((response) => {
                 if (response.status === 200) {
-                    // Show modal with the vote data
                     setModalContent("This is a valid Vote ID.")
                     setComputedAt("Vote was computed at: " + response.data.created_at)
                     setModalVisible(true)
@@ -27,14 +26,11 @@ function HomePage() {
                 }
             })
             .catch((error) => {
-            // Check for 404 specifically
                 if (error.response && error.response.status === 404) {
-                    // Show modal with the error message
                     setModalContent("Vote not found.")
                     setComputedAt("")
                     setModalVisible(true)
                 } else {
-                    // Handle other API call errors if needed
                     console.error("Error occurred while validating vote:", error)
                 }
             })
@@ -104,8 +100,6 @@ function HomePage() {
                     </Col>
                 </Col>
             </Row>
-
-            {/* Modal to show the result or error message */}
             <Modal
                 title="Validation Result"
                 open={modalVisible}

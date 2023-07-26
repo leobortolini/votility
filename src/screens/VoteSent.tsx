@@ -22,8 +22,11 @@ function VoteSent() {
                         <Button style={{ marginRight: "10px" }} onClick={() => navigate("/poll")}>
                         Create your poll
                         </Button>
-                        <Button style={{ marginLeft: "10px" }} onClick={() => navigate("/result/" + id)}>
+                        <Button style={{ marginLeft: "10px", marginRight: "10px" }} onClick={() => navigate("/result/" + id)}>
                         See results in real time
+                        </Button>
+                        <Button style={{ marginLeft: "10px" }} onClick={() => navigate("/")}>
+                        Home
                         </Button>
                     </div>
                 </div>

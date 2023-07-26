@@ -14,7 +14,7 @@ function PollCreated() {
                 <Result
                     status="success"
                     title="Poll created with success!"
-                    subTitle="Send the link to everybody vote."
+                    subTitle={`Send the link or the ID ${params.id} to everybody vote!`}
                 />
                 <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", padding: 72}}>
                     <Typography.Paragraph style={{ fontSize: "2em", alignSelf: "center"}}>Now you can: </Typography.Paragraph>
@@ -22,8 +22,11 @@ function PollCreated() {
                         <Button style={{ marginRight: "10px" }} onClick={() => {navigator.clipboard.writeText(pollUrl)}}>
                         Copy link to your poll
                         </Button>
-                        <Button style={{ marginLeft: "10px" }} onClick={() => navigate("/result/" + params.id)}>
+                        <Button style={{ marginLeft: "10px", marginRight: "10px" }} onClick={() => navigate("/result/" + params.id)}>
                         See results in real time
+                        </Button>
+                        <Button style={{ marginLeft: "10px" }} onClick={() => navigate("/")}>
+                        Home
                         </Button>
                     </div>
                 </div>
