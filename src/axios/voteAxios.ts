@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseURL = "http://localhost:8081/api/v1/vote"
+const baseURL = import.meta.env.VITE_VOTE_DNS
 
 export const voteService = axios.create({
     baseURL,

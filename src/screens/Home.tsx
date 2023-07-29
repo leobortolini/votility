@@ -14,7 +14,7 @@ function HomePage() {
 
     const handleValidateVote = () => {
         voteService
-            .get<Vote>(`http://localhost:8081/api/v1/vote/${voteId}/validate`)
+            .get<Vote>(`/${voteId}/validate`)
             .then((response) => {
                 if (response.status === 200) {
                     setModalContent("This is a valid Vote ID.")

@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: votility
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: votility
+  template:
+    metadata:
+      labels:
+        app: votility
+    spec:
+      containers:
+      - name: votility
+        image: bortolini/votility-9:9.0
+        ports:
+        - containerPort: 80
+        env:
+          - name: VITE_VOTE_DNS
+            value: "http://192.168.49.2/api/v1/vote"
+          - name: VITE_POLL_DNS
+            value: "http://192.168.49.2/api/v1/poll"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: votility
+spec:
+  selector:
+    app: votility
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: meu-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+spec:
+  rules:
+    - host:
+      http:
+        paths:
+          - path: /api/v1/poll
+            pathType: Prefix
+            backend:
+              service:
+                name: poll
+                port:
+                  number: 8080
+          - path: /api/v1/vote
+            pathType: Prefix
+            backend:
+              service:
+                name: vote
+                port:
+                  number: 8081

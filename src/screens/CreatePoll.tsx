@@ -38,8 +38,9 @@ const PollForm: React.FC = () => {
         }
 
         console.log(formattedValues)
+        console.log("oi 8")
 
-        pollService.post("http://localhost:8080/api/v1/poll", formattedValues)
+        pollService.post("", formattedValues)
             .then((response) => {
                 navigate("/pollCreated/" + response.data.id)
             })

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseURL = "http://localhost:8080/api/v1/poll"
+const baseURL = import.meta.env.VITE_POLL_DNS
 
 export const pollService = axios.create({
     baseURL,
