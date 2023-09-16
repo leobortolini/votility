@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: votility
-        image: bortolini/votility-9:9.0
+        image: bortolini/votility:1.0
         ports:
         - containerPort: 80
         env:

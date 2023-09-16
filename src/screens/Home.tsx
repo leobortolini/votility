@@ -44,9 +44,9 @@ function HomePage() {
                     <div style={{padding: 24}}>
                         <Typography.Title style={{ fontSize: "5em" }}>Votility</Typography.Title>
                         <Typography.Paragraph style={{ marginTop: 300, fontSize: "3em"}}><i>A very fast poll system</i></Typography.Paragraph>
-                        <Typography.Paragraph style={{ fontSize: "3em"}}><i>Ilimited options per poll</i></Typography.Paragraph>
+                        <Typography.Paragraph style={{ fontSize: "3em"}}><i>Unlimited options per poll</i></Typography.Paragraph>
                         <Typography.Paragraph style={{ fontSize: "3em"}}><i>No login needed, zero data collection</i></Typography.Paragraph>
-                        <Typography.Paragraph style={{ fontSize: "3em"}}><i>All informations are encrypted</i></Typography.Paragraph>
+                        <Typography.Paragraph style={{ fontSize: "3em"}}><i>All information is encrypted</i></Typography.Paragraph>
                     </div>
                 </Col>
                 <Col span={6} style={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "center"}}>
