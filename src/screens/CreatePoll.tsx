@@ -63,7 +63,7 @@ const PollForm: React.FC = () => {
                         <Form.Item
                             label="Description"
                             name="description"
-                            rules={[{ required: true, message: "Insert the description" }]}
+                            rules={[{ required: true, message: "Insert the description!" }]}
                         >
                             <Input.TextArea />
                         </Form.Item>
